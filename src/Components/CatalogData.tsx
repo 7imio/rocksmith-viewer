@@ -14,7 +14,7 @@ const CatalogData = ({ stats }: CatalogDataProps) => {
           textShadow: `2px 2px 4px rgba(0, 0, 0, 0.5)`,
         }}
       >
-        Rocksmith Song List
+        Seteemio's Rocksmith Song List
       </h1>
       {/* <p> PSARC files scanned: {stats?.psarcFilesScanned ?? "N/A"}</p>
       <p> Skipped (no song data): {stats?.skippedNoSongData ?? "N/A"}</p>
