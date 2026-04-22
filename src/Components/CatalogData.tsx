@@ -8,8 +8,13 @@ const CatalogData = ({ stats }: CatalogDataProps) => {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-white gap-y-2 mb-4">
-        Seteemio's Rocksmith Song List
+      <h1
+        className="text-3xl font-bold text-white gap-y-2 mb-4 text-shadow-lg"
+        style={{
+          textShadow: `2px 2px 4px rgba(0, 0, 0, 0.5)`,
+        }}
+      >
+        Rocksmith Song List
       </h1>
       {/* <p> PSARC files scanned: {stats?.psarcFilesScanned ?? "N/A"}</p>
       <p> Skipped (no song data): {stats?.skippedNoSongData ?? "N/A"}</p>

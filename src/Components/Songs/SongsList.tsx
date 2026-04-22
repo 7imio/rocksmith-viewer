@@ -1,46 +1,51 @@
 import { useMemo, useState } from "react";
 import type { CatalogSong } from "../../types/catalog.types";
-import SongCard from "./SongCard";
 import Pagination from "./Pagination";
-import SearchBar from "./SearchBar";
+import SongCard from "./SongCard";
+import SongsToolbar from "./SongsToolbar";
+import {
+  compareSongs,
+  getAvailableTunings,
+  getTuningNamesForInstrument,
+  songMatchesSearch,
+  songMatchesSelectedTunings,
+  type SongsFilterState,
+} from "../../Helpers/tuning-filter-helpers";
 
 interface SongsListProps {
   songs: CatalogSong[] | null;
 }
 
-const normalizeSearchText = (value: string | null | undefined): string => {
-  return (value ?? "").trim().toLowerCase();
-};
-
 const SongsList = ({ songs }: SongsListProps) => {
   const [displayCount, setDisplayCount] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchTerm, setSearchTerm] = useState("");
+
+  const [filters, setFilters] = useState<SongsFilterState>({
+    search: "",
+    sortField: "artistName",
+    sortDirection: "asc",
+    selectedTunings: [],
+  });
+
+  const availableTunings = useMemo(() => getAvailableTunings(songs), [songs]);
 
   const filteredSongs = useMemo(() => {
     if (!songs || songs.length === 0) {
       return [];
     }
 
-    const normalizedSearch = normalizeSearchText(searchTerm);
-
-    if (!normalizedSearch) {
-      return songs;
-    }
-
-    return songs.filter((song) => {
-      const title = normalizeSearchText(song.songName);
-      const artist = normalizeSearchText(song.artistName);
-
-      return (
-        title.includes(normalizedSearch) || artist.includes(normalizedSearch)
+    return songs
+      .filter((song) => songMatchesSearch(song, filters.search))
+      .filter((song) =>
+        songMatchesSelectedTunings(song, filters.selectedTunings),
+      )
+      .sort((a, b) =>
+        compareSongs(a, b, filters.sortField, filters.sortDirection),
       );
-    });
-  }, [songs, searchTerm]);
+  }, [songs, filters]);
 
   const totalSongs = filteredSongs.length;
   const totalPages = totalSongs > 0 ? Math.ceil(totalSongs / displayCount) : 1;
-
   const safeCurrentPage = Math.min(Math.max(currentPage, 1), totalPages);
 
   const paginatedSongs = useMemo(() => {
@@ -59,23 +64,65 @@ const SongsList = ({ songs }: SongsListProps) => {
     setCurrentPage(clampedPage);
   };
 
-  const handleSearchChange = (value: string) => {
-    setSearchTerm(value);
+  const updateFilters = (next: Partial<SongsFilterState>) => {
+    setFilters((prev) => ({
+      ...prev,
+      ...next,
+    }));
     setCurrentPage(1);
   };
 
-  const handleDisplayCountChange = (count: number) => {
-    setDisplayCount(count);
-    setCurrentPage(1);
+  const handleToggleTuning = (tuningName: string) => {
+    const isSelected = filters.selectedTunings.includes(tuningName);
+
+    updateFilters({
+      selectedTunings: isSelected
+        ? filters.selectedTunings.filter((tuning) => tuning !== tuningName)
+        : [...filters.selectedTunings, tuningName],
+    });
+  };
+
+  const handleSelectAllInstrumentTunings = (instrument: "guitar" | "bass") => {
+    const tuningNames = getTuningNamesForInstrument(songs, instrument);
+
+    updateFilters({
+      selectedTunings: [
+        ...new Set([...filters.selectedTunings, ...tuningNames]),
+      ],
+    });
+  };
+
+  const handleClearTunings = () => {
+    updateFilters({
+      selectedTunings: [],
+    });
   };
 
   return (
     <div className="w-full space-y-4">
-      <SearchBar
-        value={searchTerm}
-        onChange={handleSearchChange}
-        totalResults={filteredSongs.length}
-      />
+      <div className="relative z-20">
+        <SongsToolbar
+          search={filters.search}
+          onSearchChange={(value) => updateFilters({ search: value })}
+          totalResults={filteredSongs.length}
+          sortField={filters.sortField}
+          sortDirection={filters.sortDirection}
+          onSortFieldChange={(value) => updateFilters({ sortField: value })}
+          onSortDirectionChange={(value) =>
+            updateFilters({ sortDirection: value })
+          }
+          availableTunings={availableTunings}
+          selectedTunings={filters.selectedTunings}
+          onToggleTuning={handleToggleTuning}
+          onSelectAllGuitarTunings={() =>
+            handleSelectAllInstrumentTunings("guitar")
+          }
+          onSelectAllBassTunings={() =>
+            handleSelectAllInstrumentTunings("bass")
+          }
+          onClearTunings={handleClearTunings}
+        />
+      </div>
 
       {!songs || songs.length === 0 ? (
         <div className="flex min-h-50 items-center justify-center rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 text-zinc-400">
@@ -83,8 +130,7 @@ const SongsList = ({ songs }: SongsListProps) => {
         </div>
       ) : filteredSongs.length === 0 ? (
         <div className="flex min-h-50 items-center justify-center rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 text-zinc-400">
-          No results for{" "}
-          <span className="ml-1 font-semibold text-white">"{searchTerm}"</span>.
+          No results found with the current filters.
         </div>
       ) : (
         <>
@@ -98,7 +144,10 @@ const SongsList = ({ songs }: SongsListProps) => {
             currentPage={safeCurrentPage}
             totalPages={totalPages}
             totalItemsPerPage={displayCount}
-            setTotalItemsPerPage={handleDisplayCountChange}
+            setTotalItemsPerPage={(count) => {
+              setDisplayCount(count);
+              setCurrentPage(1);
+            }}
             onPageChange={handlePageChange}
           />
         </>

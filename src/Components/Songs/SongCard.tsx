@@ -62,7 +62,7 @@ const SongCard = ({ song }: SongCardProps) => {
   };
 
   return (
-    <div className="overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900/60 shadow-sm transition hover:border-zinc-700">
+    <div className="overflow-visible rounded-xl border border-zinc-800 bg-zinc-900/50 backdrop-blur-sm shadow-sm transition hover:border-zinc-700">
       <button
         type="button"
         onClick={() => setIsExpanded((prev) => !prev)}
@@ -103,7 +103,6 @@ const SongCard = ({ song }: SongCardProps) => {
           size={20}
         />
       </button>
-
       {isExpanded && (
         <div className="border-t border-zinc-800 px-4 py-4">
           <div className="grid gap-4 lg:grid-cols-[1fr_auto]">

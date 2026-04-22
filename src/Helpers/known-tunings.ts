@@ -7,21 +7,23 @@ export const KNOWN_TUNINGS: Record<string, string> = {
   "C F A# D# G C": "C Standard",
   "B E A D F# B": "B Standard",
   "A# D# G# C# F A#": "A# Standard",
+  "A D G C F A": "A Standard",
 
   // Guitar drop
-  "D A D G B E": "Drop D",
-  "C# G# C# F# A# D#": "Drop C#",
-  "C G C F A D": "Drop C",
-  "B F# B E G# C#": "Drop B",
-  "A# F A# D# G C": "Drop A#",
-  "A E A D F# B": "Drop A",
-  "G# D# G# C# F A#": "Drop G#",
+  "D A D G B E": "E Drop D",
+  "C# G# C# F# A# D#": "D# Drop C#",
+  "C G C F A D": "D Drop C",
+  "B F# B E G# C#": "C# Drop B",
+  "A# F A# D# G C": "C Drop A#",
+  "A E A D F# B": "B Drop A",
+  "G# D# G# C# F A#": "A# Drop G#",
+  "G D G C F A": "A Drop G",
 
   // Special guitar case
-  "A D G C F A": "Drop A in D Standard",
+  "A G C F A D": "D Drop A (Mastodon alt)",
 
   // Bass standard
-  "E A D G": "Bass Standard",
+  "E A D G": "Bass E Standard",
   "D# G# C# F#": "Bass D# Standard",
   "D G C F": "Bass D Standard",
   "C# F# B E": "Bass C# Standard",
@@ -30,13 +32,13 @@ export const KNOWN_TUNINGS: Record<string, string> = {
   "A# D# G# C#": "Bass A# Standard",
 
   // Bass drop
-  "D A D G": "Bass Drop D",
-  "C# G# C# F#": "Bass Drop C#",
-  "C G C F": "Bass Drop C",
-  "B F# B E": "Bass Drop B",
-  "A# F A# D#": "Bass Drop A#",
-  "A E A D": "Bass Drop A",
-  "G# D# G# C#": "Bass Drop G#",
+  "D A D G": "Bass E Drop D",
+  "C# G# C# F#": "Bass D# Drop C#",
+  "C G C F": "Bass D Drop C",
+  "B F# B E": "Bass C# Drop B",
+  "A# F A# D#": "Bass C Drop A#",
+  "A E A D": "Bass B Drop A",
+  "G# D# G# C#": "Bass A# Drop G#",
 
   // Open tunings
   "E B E G# B E": "Open E",

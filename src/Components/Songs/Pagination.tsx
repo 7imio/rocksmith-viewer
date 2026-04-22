@@ -24,7 +24,7 @@ const Pagination = ({
   const isLastPage = currentPage >= totalPages;
 
   return (
-    <div className="flex flex-col items-center justify-between gap-4 rounded-xl border border-zinc-800 bg-zinc-900/50 p-4 md:flex-row">
+    <div className="flex flex-col items-center justify-between gap-4 rounded-xl border border-zinc-800 bg-neutral-900/60 p-4 md:flex-row md:gap-0 backdrop-blur-sm">
       <div className="flex items-center gap-2">
         <label htmlFor="items-per-page" className="text-sm text-zinc-300">
           Songs per page

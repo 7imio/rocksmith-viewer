@@ -20,10 +20,33 @@ export const getTuningName = (arrangement: CatalogArrangement): string => {
   const displayedNotes = getDisplayedTuningNotes(arrangement);
 
   if (displayedNotes.length === 0) {
-    return "Accordage Personnalisé";
+    return "Unknown tuning";
   }
 
   const key = displayedNotes.join(" ");
 
   return KNOWN_TUNINGS[key] ?? key;
+};
+
+export const getTuningFilterName = (
+  arrangement: CatalogArrangement,
+): string => {
+  const displayedNotes = getDisplayedTuningNotes(arrangement);
+
+  if (displayedNotes.length === 0) {
+    return arrangement.type === "bass"
+      ? "Custom Bass Tuning"
+      : "Custom Guitar Tuning";
+  }
+
+  const key = displayedNotes.join(" ");
+  const knownTuning = KNOWN_TUNINGS[key];
+
+  if (knownTuning) {
+    return knownTuning;
+  }
+
+  return arrangement.type === "bass"
+    ? "Custom Bass Tuning"
+    : "Custom Guitar Tuning";
 };
