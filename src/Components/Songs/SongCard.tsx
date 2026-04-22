@@ -139,7 +139,7 @@ const SongCard = ({ song }: SongCardProps) => {
                         key={`${song.id}-${arrangement.type}-${index}`}
                         className="rounded-lg border border-zinc-800 bg-zinc-950/50 p-3"
                       >
-                        <div className="grid grid-cols-[120px_80px_1fr] items-start gap-4">
+                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-[120px_80px_minmax(0,1fr)] sm:items-start">
                           {/* TYPE */}
                           <div>
                             <p className="text-xs text-zinc-400 uppercase">

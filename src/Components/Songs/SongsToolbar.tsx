@@ -69,13 +69,13 @@ const SongsToolbar = ({
         } selected`;
 
   return (
-    <div className="space-y-3 rounded-xl border border-zinc-800 bg-zinc-900/50 backdrop-blur-sm p-4">
+    <div className="space-y-3 rounded-xl border border-zinc-800 bg-zinc-900/50 p-4 backdrop-blur-sm">
       <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
           <button
             type="button"
             onClick={() => setIsFiltersOpen((prev) => !prev)}
-            className="inline-flex items-center gap-2 rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-zinc-700"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-zinc-700 sm:w-auto"
           >
             <Filter size={16} />
             {isFiltersOpen ? "Hide filters" : "Show filters"}
@@ -86,8 +86,8 @@ const SongsToolbar = ({
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-3">
-          <div className="min-w-45">
+        <div className="grid w-full grid-cols-1 gap-3 lg:flex lg:w-auto lg:flex-wrap lg:items-end">
+          <div className="w-full min-w-0 lg:min-w-45">
             <label className="mb-1 block text-xs uppercase tracking-wide text-zinc-400">
               Sort by
             </label>
@@ -105,7 +105,7 @@ const SongsToolbar = ({
             </select>
           </div>
 
-          <div className="min-w-55">
+          <div className="w-full min-w-0 lg:min-w-55">
             <label className="mb-1 block text-xs uppercase tracking-wide text-zinc-400">
               Order
             </label>
@@ -126,10 +126,10 @@ const SongsToolbar = ({
       {isFiltersOpen && (
         <div className="space-y-4 rounded-xl border border-zinc-800 bg-zinc-950/40 p-4">
           <div className="grid gap-4 xl:grid-cols-[1fr_auto] xl:items-end">
-            <div>
+            <div className="min-w-0">
               <label className="mb-2 block text-sm text-zinc-300">Search</label>
 
-              <div className="relative">
+              <div className="relative min-w-0">
                 <Search
                   size={18}
                   className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400"
@@ -140,16 +140,16 @@ const SongsToolbar = ({
                   value={search}
                   onChange={(e) => onSearchChange(e.target.value)}
                   placeholder="Search by song title or artist..."
-                  className="w-full rounded-lg border border-zinc-700 bg-zinc-800 py-2.5 pl-10 pr-4 text-sm text-white outline-none transition placeholder:text-zinc-500 focus:border-zinc-500"
+                  className="w-full min-w-0 rounded-lg border border-zinc-700 bg-zinc-800 py-2.5 pl-10 pr-4 text-sm text-white outline-none transition placeholder:text-zinc-500 focus:border-zinc-500"
                 />
               </div>
             </div>
 
-            <div className="space-y-2">
+            <div className="min-w-0 space-y-2">
               <label className="block text-sm text-zinc-300">Tunings</label>
 
-              <div className="flex items-center gap-3">
-                <div className="inline-flex rounded-lg border border-zinc-700 bg-zinc-900 p-1">
+              <div className="flex flex-col gap-3 md:flex-row md:items-center">
+                <div className="inline-flex w-fit rounded-lg border border-zinc-700 bg-zinc-900 p-1">
                   <button
                     type="button"
                     onClick={() => setActiveInstrument("guitar")}
@@ -175,20 +175,22 @@ const SongsToolbar = ({
                   </button>
                 </div>
 
-                <TuningDropdown
-                  label={tuningSummary}
-                  tunings={displayedTunings}
-                  selectedTunings={selectedTunings}
-                  onToggleTuning={onToggleTuning}
-                  onSelectAll={() => {
-                    if (activeInstrument === "guitar") {
-                      onSelectAllGuitarTunings();
-                    } else {
-                      onSelectAllBassTunings();
-                    }
-                  }}
-                  onClear={onClearTunings}
-                />
+                <div className="w-full min-w-0 md:w-auto md:flex-1">
+                  <TuningDropdown
+                    label={tuningSummary}
+                    tunings={displayedTunings}
+                    selectedTunings={selectedTunings}
+                    onToggleTuning={onToggleTuning}
+                    onSelectAll={() => {
+                      if (activeInstrument === "guitar") {
+                        onSelectAllGuitarTunings();
+                      } else {
+                        onSelectAllBassTunings();
+                      }
+                    }}
+                    onClear={onClearTunings}
+                  />
+                </div>
               </div>
             </div>
           </div>

@@ -41,13 +41,13 @@ const TuningDropdown = ({
   }, []);
 
   return (
-    <div ref={wrapperRef} className="relative min-w-70">
+    <div ref={wrapperRef} className="relative w-full min-w-0 md:min-w-70">
       <button
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
-        className="flex w-full items-center justify-between gap-3 rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-2.5 text-left text-sm text-white transition hover:bg-zinc-700"
+        className="flex w-full min-w-0 items-center justify-between gap-3 rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-2.5 text-left text-sm text-white transition hover:bg-zinc-700"
       >
-        <span className="truncate">{label}</span>
+        <span className="min-w-0 flex-1 truncate">{label}</span>
         <ChevronDown
           size={16}
           className={`shrink-0 transition-transform ${
@@ -57,7 +57,7 @@ const TuningDropdown = ({
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 z-100 mt-2 w-full overflow-hidden rounded-xl border border-zinc-700 bg-zinc-900 shadow-2xl">
+        <div className="absolute left-0 right-0 z-100 mt-2 w-full overflow-hidden rounded-xl border border-zinc-700 bg-zinc-900 shadow-2xl">
           <div className="flex items-center justify-between gap-2 border-b border-zinc-800 p-3">
             <button
               type="button"
@@ -91,12 +91,12 @@ const TuningDropdown = ({
                     key={`${tuning.instrument}-${tuning.name}`}
                     type="button"
                     onClick={() => onToggleTuning(tuning.name)}
-                    className="flex w-full items-center justify-between gap-3 rounded-md px-3 py-2 text-left text-sm text-zinc-200 transition hover:bg-zinc-800"
+                    className="flex w-full min-w-0 items-center justify-between gap-3 rounded-md px-3 py-2 text-left text-sm text-zinc-200 transition hover:bg-zinc-800"
                   >
-                    <span className="truncate">{tuning.name}</span>
+                    <span className="min-w-0 truncate">{tuning.name}</span>
 
                     <span
-                      className={`inline-flex h-5 w-5 items-center justify-center rounded border ${
+                      className={`inline-flex h-5 w-5 shrink-0 items-center justify-center rounded border ${
                         isChecked
                           ? "border-zinc-300 bg-zinc-200 text-black"
                           : "border-zinc-600 bg-transparent text-transparent"
