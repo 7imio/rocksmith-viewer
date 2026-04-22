@@ -9,9 +9,16 @@ const CatalogData = ({ stats }: CatalogDataProps) => {
   return (
     <div>
       <h1
-        className="text-3xl font-bold text-white gap-y-2 mb-4 text-shadow-lg"
+        className="
+    text-xl
+    sm:text-2xl
+    md:text-3xl
+    font-bold
+    text-white
+    mb-4
+  "
         style={{
-          textShadow: `2px 2px 4px rgba(0, 0, 0, 0.5)`,
+          textShadow: "2px 2px 4px rgba(0,0,0,.5)",
         }}
       >
         Seteemio's Rocksmith Song List
