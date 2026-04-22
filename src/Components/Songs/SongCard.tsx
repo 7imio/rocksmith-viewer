@@ -1,7 +1,10 @@
 import { ChevronDown, Copy, Disc3, Guitar, Timer } from "lucide-react";
 import type { CatalogSong } from "../../types/catalog.types";
 import { useMemo, useState } from "react";
-import { formatTuning } from "../../Helpers/tuning-helpers";
+import {
+  getDisplayedTuningNotes,
+  getTuningName,
+} from "../../Helpers/tuning-name-helpers";
 
 interface SongCardProps {
   song: CatalogSong;
@@ -34,16 +37,13 @@ const SongCard = ({ song }: SongCardProps) => {
 
   const arrangementsWithTuning = useMemo(() => {
     return song.arrangements.map((arrangement) => {
-      const formattedTuning = formatTuning(arrangement.tuning);
-      const tuningNotes =
-        formattedTuning && formattedTuning !== "Unknown tuning"
-          ? formattedTuning.split(" ")
-          : [];
+      const tuningNotes = getDisplayedTuningNotes(arrangement);
+      const tuningName = getTuningName(arrangement);
 
       return {
         ...arrangement,
-        formattedTuning,
         tuningNotes,
+        tuningName,
       };
     });
   }, [song.arrangements]);
@@ -135,12 +135,6 @@ const SongCard = ({ song }: SongCardProps) => {
 
                 <div className="grid gap-3">
                   {arrangementsWithTuning.map((arrangement, index) => {
-                    if (arrangement.type === "bass") {
-                      arrangement.tuningNotes = arrangement.tuningNotes.slice(
-                        0,
-                        4,
-                      ); // Skip bass arrangements
-                    }
                     return (
                       <div
                         key={`${song.id}-${arrangement.type}-${index}`}
@@ -174,20 +168,26 @@ const SongCard = ({ song }: SongCardProps) => {
                             </p>
 
                             {arrangement.tuningNotes.length > 0 ? (
-                              <div className="mt-1 flex flex-wrap gap-1">
-                                {arrangement.tuningNotes.map(
-                                  (note, noteIndex) => (
-                                    <span
-                                      key={`${note}-${noteIndex}`}
-                                      className={`inline-flex min-w-9 items-center justify-center rounded-md px-2 py-1 text-xs font-bold text-white ${
-                                        TUNING_COLORS[noteIndex] ??
-                                        "bg-zinc-700"
-                                      }`}
-                                    >
-                                      {note}
-                                    </span>
-                                  ),
-                                )}
+                              <div className="mt-1 space-y-2">
+                                <p className="text-sm font-semibold text-white">
+                                  {arrangement.tuningName}
+                                </p>
+
+                                <div className="flex flex-wrap gap-1">
+                                  {arrangement.tuningNotes.map(
+                                    (note, noteIndex) => (
+                                      <span
+                                        key={`${note}-${noteIndex}`}
+                                        className={`inline-flex min-w-9 items-center justify-center rounded-md px-2 py-1 text-xs font-bold text-white ${
+                                          TUNING_COLORS[noteIndex] ??
+                                          "bg-zinc-700"
+                                        }`}
+                                      >
+                                        {note}
+                                      </span>
+                                    ),
+                                  )}
+                                </div>
                               </div>
                             ) : (
                               <p className="text-sm text-zinc-300">
