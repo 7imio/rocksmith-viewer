@@ -15,9 +15,14 @@ function App() {
   }
 
   return (
-    <div className="App mx-auto flex w-full max-w-[1440px] flex-col px-3 py-6 sm:px-6 lg:px-8">
-      {data?.stats && <CatalogData stats={data.stats} />}
-      {/* // song list component with pagination for data.songs*/}
+    <div className="App mx-auto flex h-dvh w-full max-w-360 flex-col overflow-hidden px-3 py-3 sm:px-6 sm:py-4 lg:px-8">
+      {data?.stats && (
+        <div className="shrink-0">
+          <CatalogData stats={data.stats} />
+        </div>
+      )}
+
+      {/* Song list: toolbar and pagination stay visible, only cards scroll. */}
       {data?.songs && <SongsList songs={data.songs} />}
     </div>
   );

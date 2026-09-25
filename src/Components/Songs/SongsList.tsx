@@ -99,8 +99,8 @@ const SongsList = ({ songs }: SongsListProps) => {
   };
 
   return (
-    <div className="w-full space-y-4">
-      <div className="relative z-20">
+    <div className="flex min-h-0 w-full flex-1 flex-col gap-4 overflow-hidden">
+      <div className="relative z-20 shrink-0">
         <SongsToolbar
           search={filters.search}
           onSearchChange={(value) => updateFilters({ search: value })}
@@ -125,31 +125,35 @@ const SongsList = ({ songs }: SongsListProps) => {
       </div>
 
       {!songs || songs.length === 0 ? (
-        <div className="flex min-h-50 items-center justify-center rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 text-zinc-400">
+        <div className="flex min-h-0 flex-1 items-center justify-center overflow-y-auto rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 text-zinc-400">
           No songs found in catalog.
         </div>
       ) : filteredSongs.length === 0 ? (
-        <div className="flex min-h-50 items-center justify-center rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 text-zinc-400">
+        <div className="flex min-h-0 flex-1 items-center justify-center overflow-y-auto rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 text-zinc-400">
           No results found with the current filters.
         </div>
       ) : (
         <>
-          <div className="grid gap-4">
-            {paginatedSongs.map((song) => (
-              <SongCard key={song.id} song={song} />
-            ))}
+          <div className="min-h-0 pt-1 pb-1 flex-1 overflow-y-auto pr-1 sm:pr-2">
+            <div className="grid gap-4 pb-1">
+              {paginatedSongs.map((song) => (
+                <SongCard key={song.id} song={song} />
+              ))}
+            </div>
           </div>
 
-          <Pagination
-            currentPage={safeCurrentPage}
-            totalPages={totalPages}
-            totalItemsPerPage={displayCount}
-            setTotalItemsPerPage={(count) => {
-              setDisplayCount(count);
-              setCurrentPage(1);
-            }}
-            onPageChange={handlePageChange}
-          />
+          <div className="shrink-0">
+            <Pagination
+              currentPage={safeCurrentPage}
+              totalPages={totalPages}
+              totalItemsPerPage={displayCount}
+              setTotalItemsPerPage={(count) => {
+                setDisplayCount(count);
+                setCurrentPage(1);
+              }}
+              onPageChange={handlePageChange}
+            />
+          </div>
         </>
       )}
     </div>
