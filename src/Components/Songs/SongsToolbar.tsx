@@ -155,7 +155,7 @@ const SongsToolbar = ({
                     onClick={() => setActiveInstrument("guitar")}
                     className={`rounded-md px-3 py-1.5 text-sm transition ${
                       activeInstrument === "guitar"
-                        ? "bg-zinc-700 text-white"
+                        ? "bg-orange-500 text-black shadow-lg shadow-orange-500/20"
                         : "text-zinc-400 hover:text-white"
                     }`}
                   >

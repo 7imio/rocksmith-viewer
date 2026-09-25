@@ -15,7 +15,7 @@ function App() {
   }
 
   return (
-    <div className="App flex flex-col items-center p-4 w-full mx-auto">
+    <div className="App mx-auto flex w-full max-w-[1440px] flex-col px-3 py-6 sm:px-6 lg:px-8">
       {data?.stats && <CatalogData stats={data.stats} />}
       {/* // song list component with pagination for data.songs*/}
       {data?.songs && <SongsList songs={data.songs} />}

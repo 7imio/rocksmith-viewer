@@ -62,37 +62,41 @@ const SongCard = ({ song }: SongCardProps) => {
   };
 
   return (
-    <div className="overflow-visible rounded-xl border border-zinc-800 bg-zinc-900/50 backdrop-blur-sm shadow-sm transition hover:border-zinc-700">
+    <div
+      className="
+  group
+  overflow-hidden
+  rounded-2xl
+  border border-white/8
+  bg-zinc-950/60
+  shadow-[0_12px_40px_rgba(0,0,0,0.18)]
+  backdrop-blur-xl
+  transition-all
+  duration-200
+  hover:-translate-y-0.5
+  hover:border-orange-500/30
+  hover:bg-zinc-900/70
+  hover:shadow-[0_16px_50px_rgba(0,0,0,0.28)]
+"
+    >
       <button
         type="button"
         onClick={() => setIsExpanded((prev) => !prev)}
         className="flex w-full items-center justify-between gap-4 px-4 py-3 text-left transition hover:bg-zinc-800/40"
       >
-        <div className="grid min-w-0 flex-1 grid-cols-1 gap-2 md:grid-cols-[1.4fr_1.2fr_0.8fr_0.8fr] md:items-center">
-          <div className="min-w-0">
-            <p className="truncate text-sm text-zinc-400">Artist</p>
-            <p className="truncate font-semibold text-white">
-              {song.artistName ?? "Unknown artist"}
-            </p>
-          </div>
+        <div className="min-w-0 flex-1">
+          <p className="truncate text-xs font-medium uppercase tracking-[0.15em] text-orange-400">
+            {song.artistName ?? "Unknown artist"}
+          </p>
 
-          <div className="min-w-0">
-            <p className="truncate text-sm text-zinc-400">Song</p>
-            <p className="truncate font-bold text-white">
-              {song.songName ?? "Unknown song"}
-            </p>
-          </div>
+          <p className="mt-1 truncate text-lg font-semibold text-white sm:text-xl">
+            {song.songName ?? "Unknown song"}
+          </p>
 
-          <div className="min-w-0">
-            <p className="truncate text-sm text-zinc-400">Album</p>
-            <p className="truncate text-zinc-200">
-              {song.albumName ?? "Unknown album"}
-            </p>
-          </div>
-
-          <div className="min-w-0">
-            <p className="truncate text-sm text-zinc-400">Length</p>
-            <p className="text-zinc-200">{songLength}</p>
+          <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-zinc-400">
+            <span>{song.albumName ?? "Unknown album"}</span>
+            <span className="hidden sm:inline">•</span>
+            <span>{songLength}</span>
           </div>
         </div>
 
